@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kadıköy Coffee — Ice Latte Lansmanı</title>
+  <meta name="description" content="Kadıköy'ün yeni buluşma noktası. 19 Nisan'da kapılarımızı açıyoruz. Ice Latte ile tanışın." />
+  <meta property="og:title" content="Kadıköy Coffee — Ice Latte" />
+  <meta property="og:description" content="Kadıköy'ün en soğuk yeniliği. 19 Nisan'da kapılarımız açılıyor." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%231C3F8C'/><text y='22' x='16' text-anchor='middle' font-size='16' fill='white'>k</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────── */
+    :root {
+      --bg:         #FAFAF7;
+      --bg-warm:    #F4EDE3;
+      --bg-dark:    #141210;
+      --text:       #141210;
+      --text-inv:   #FAFAF7;
+      --muted:      #7A7168;
+      --border:     #E4DDD3;
+      --border-dark:#2A2520;
+      --blue:       #1C3F8C;
+      --blue-light: #EBF0FA;
+      --blue-mid:   #2D54B3;
+      --brown:      #8B5E3C;
+      --brown-light:#F5EDE3;
+
+      --space-xs:  4px;
+      --space-sm:  8px;
+      --space-md:  16px;
+      --space-lg:  24px;
+      --space-xl:  48px;
+      --space-2xl: 80px;
+      --space-3xl: 128px;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ─── RESET ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ─── TYPOGRAPHY HELPERS ─────────────────── */
+    .f-cond   { font-family: 'Barlow Condensed', sans-serif; }
+    .f-serif  { font-family: 'Playfair Display', serif; font-style: italic; }
+    .f-label  {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    /* ─── REVEAL ─────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.35s; }
+
+    /* ─── IMG WRAPPER ────────────────────────── */
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.8s var(--ease-out);
+    }
+    .img-wrap:hover img { transform: scale(1.04); }
+
+    /* ─── DIVIDER ────────────────────────────── */
+    .rule { width: 100%; height: 1px; background: var(--border); }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      background: rgba(250,250,247,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      flex: 0 0 auto;
+    }
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+      margin-left: 56px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+    /* ─── LANG TOGGLE ───────────────────────── */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .lang-btn {
+      padding: 5px 11px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      border: none;
+      background: none;
+    }
+    .lang-btn + .lang-btn { border-left: 1px solid var(--border); }
+    .lang-btn.active {
+      background: var(--text);
+      color: var(--text-inv);
+    }
+    .lang-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+    .nav-cta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 9px 20px;
+      background: var(--text);
+      color: var(--text-inv);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-cta:hover { background: var(--blue); }
+    .nav-cta:active { background: var(--blue-mid); transform: scale(0.98); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--text);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 40px;
+      gap: 4px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 8vw, 56px);
+      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      transition: color 0.2s ease;
+    }
+    .nav-mobile a:hover { color: var(--blue); }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    #hero {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 72px 64px 56px;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.6s var(--ease-out) 0.1s forwards;
+    }
+    .hero-eyebrow-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: pulse 2.5s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-main {
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.25s forwards;
+    }
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(88px, 14vw, 200px);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .hero-title .accent {
+      display: block;
+      color: var(--blue);
+    }
+    .hero-title .accent-serif {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.72em;
+      color: var(--brown);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+
+    .hero-tagline {
+      margin-top: 40px;
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 360px;
+      line-height: 1.7;
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.5s forwards;
+    }
+    .hero-launch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border: 1px solid var(--text);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .hero-launch-badge:hover {
+      background: var(--text);
+      color: var(--text-inv);
+    }
+    .hero-scroll-hint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-scroll-hint span {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+    }
+    .scroll-arrow {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-arrow::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--blue);
+      animation: scanDown 2s ease 1.5s infinite;
+    }
+    @keyframes scanDown {
+      0% { top: -100%; }
+      100% { top: 200%; }
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: #E8E0D4;
+    }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      animation: fadeIn 1.2s var(--ease-out) 0.4s forwards;
+    }
+    .hero-right-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,250,247,0.88);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border);
+    }
+    .hero-right-caption p {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .hero-right-caption strong {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+      from { opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
+       TICKER / ANNOUNCEMENT BAR
+    ══════════════════════════════════════════════ */
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      background: var(--bg);
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: ticker 22s linear infinite;
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-right: 60px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ticker-item .sep { color: var(--blue); font-size: 16px; }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ═══════════════════════════════════════════
+       ICE LATTE FEATURE
+    ══════════════════════════════════════════════ */
+    #ice-latte {
+      padding: var(--space-3xl) 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .ice-latte-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 700px;
+    }
+    .ice-latte-media {
+      position: relative;
+      background: var(--bg-warm);
+    }
+    .ice-latte-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .ice-latte-media-tag {
+      position: absolute;
+      top: 32px; right: 32px;
+      padding: 8px 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ice-latte-content {
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .ice-latte-content .f-label { color: var(--blue); margin-bottom: 28px; }
+    .ice-latte-content .launch-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--blue-light);
+      border: 1px solid rgba(28,63,140,0.15);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 32px;
+      width: fit-content;
+    }
+    .ice-latte-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(52px, 6vw, 88px);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+    .ice-latte-headline em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      color: var(--brown);
+      letter-spacing: 0;
+      font-size: 0.9em;
+      display: block;
+    }
+    .ice-latte-body {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+    .ice-latte-body strong { color: var(--text); font-weight: 500; }
+
+    .flavor-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .flavor-tag {
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .flavor-tag:hover { border-color: var(--blue); color: var(--blue); }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: gap 0.3s var(--ease-out), color 0.2s ease;
+    }
+    .cta-link svg { flex-shrink: 0; transition: transform 0.3s var(--ease-out); }
+    .cta-link:hover { color: var(--blue); gap: 20px; }
+    .cta-link:hover svg { transform: translateX(4px); }
+    .cta-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+
+    /* ═══════════════════════════════════════════
+       STORY / ABOUT
+    ══════════════════════════════════════════════ */
+    #story {
+      background: var(--bg-dark);
+      color: var(--text-inv);
+      padding: var(--space-3xl) 0;
+    }
+    .story-inner {
+      display: grid;
+      grid-template-columns: 55% 1fr;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .story-media {
+      position: relative;
+    }
+    .story-media img {
+      width: 100%; height: 100%;
+      min-height: 560px;
+      object-fit: cover;
+      filter: brightness(0.85);
+    }
+    .story-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(20,18,16,0.8), transparent);
+    }
+    .story-content {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--border-dark);
+    }
+    .story-content .f-label { color: var(--brown); margin-bottom: 28px; }
+    .story-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--text-inv);
+      margin-bottom: 32px;
+    }
+    .story-headline em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      color: rgba(250,250,247,0.5);
+      display: block;
+      font-size: 0.85em;
+      letter-spacing: 0;
+    }
+    .story-body {
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(250,250,247,0.55);
+      margin-bottom: 40px;
+    }
+    .story-body strong { color: var(--text-inv); font-weight: 400; }
+    .story-rule { width: 32px; height: 1px; background: var(--brown); margin-bottom: 32px; }
+    .story-stat {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,247,0.35);
+    }
+    .story-stat strong {
+      display: block;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-inv);
+      line-height: 1;
+    }
+
+    /* ═══════════════════════════════════════════
+       MENU
+    ══════════════════════════════════════════════ */
+    #menu {
+      padding: var(--space-3xl) 0;
+      border-top: 1px solid var(--border);
+    }
+    .menu-header {
+      max-width: 1400px;
+      margin: 0 auto var(--space-2xl);
+      padding: 0 40px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 32px;
+    }
+    .menu-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(48px, 7vw, 88px);
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+    .menu-title .sub {
+      display: block;
+      font-size: 0.45em;
+      font-weight: 400;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+    .menu-view-all {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .menu-view-all:hover { color: var(--blue); border-color: var(--blue); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-left: 1px solid var(--border);
+    }
+    .menu-card {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      transition: background 0.3s ease;
+    }
+    .menu-card:hover { background: var(--bg-warm); }
+    .menu-card:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+    .menu-card:active .card-img img { transform: scale(1.06); }
+
+    .menu-card--featured { grid-row: span 2; }
+    .menu-card--wide { grid-column: span 2; }
+
+    .card-img { overflow: hidden; }
+    .menu-card--featured .card-img { height: 420px; }
+    .menu-card--sm .card-img { height: 200px; }
+    .menu-card--wide .card-img { height: 220px; }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .menu-card:hover .card-img img { transform: scale(1.04); }
+
+    .card-body {
+      padding: 20px 24px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .card-category {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .menu-card--featured .card-name { font-size: 30px; }
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .card-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .card-tag-new {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      border: 1px solid rgba(28,63,140,0.25);
+      padding: 3px 10px;
+    }
+
+    /* Wide card layout */
+    .menu-card--wide .card-inner { display: flex; }
+    .menu-card--wide .card-img { flex: 0 0 42%; }
+    .menu-card--wide .card-body { flex: 1; border-top: none; border-left: 1px solid var(--border); }
+
+    /* ═══════════════════════════════════════════
+       STATS BAR
+    ══════════════════════════════════════════════ */
+    #stats {
+      background: var(--blue);
+      color: var(--text-inv);
+      padding: var(--space-2xl) 40px;
+    }
+    .stats-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-left: 1px solid rgba(255,255,255,0.12);
+    }
+    .stat-item {
+      padding: var(--space-xl) var(--space-lg);
+      border-right: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(56px, 8vw, 96px);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #fff;
+    }
+    .stat-label {
+      margin-top: 8px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ═══════════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════════════ */
+    #testimonials {
+      padding: var(--space-3xl) 0;
+      border-top: 1px solid var(--border);
+    }
+    .testimonials-header {
+      max-width: 1400px;
+      margin: 0 auto var(--space-2xl);
+      padding: 0 40px;
+    }
+    .testimonials-header .f-label { color: var(--muted); margin-bottom: 16px; }
+    .testimonials-header h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(40px, 5vw, 64px);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 0.9;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+    .testimonial {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .testimonial-quote {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .testimonial-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .author-img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--bg-warm);
+    }
+    .author-img img { width: 100%; height: 100%; object-fit: cover; }
+    .author-info {}
+    .author-name { font-size: 14px; font-weight: 500; color: var(--text); }
+    .author-detail { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+    /* ═══════════════════════════════════════════
+       LOCATION & HOURS
+    ══════════════════════════════════════════════ */
+    #location {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+    }
+    .location-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .location-left {
+      padding: var(--space-3xl) 64px var(--space-3xl) 40px;
+      border-right: 1px solid var(--border);
+    }
+    .location-left .f-label { color: var(--muted); margin-bottom: 28px; }
+    .location-address {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(36px, 4.5vw, 64px);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 32px;
+    }
+    .location-address .district { display: block; color: var(--blue); }
+    .location-body { font-size: 15px; line-height: 1.8; color: var(--muted); }
+
+    .opening-note {
+      margin-top: 40px;
+      padding: 20px 24px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue);
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .opening-note strong { color: var(--blue); }
+
+    .location-right {
+      padding: var(--space-3xl) 40px var(--space-3xl) 64px;
+    }
+    .location-right .f-label { color: var(--muted); margin-bottom: 28px; }
+    .hours-list { list-style: none; }
+    .hours-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+    }
+    .hours-day { color: var(--muted); }
+    .hours-time {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .hours-time.launch { color: var(--blue); }
+
+    /* ═══════════════════════════════════════════
+       CTA / FINAL SECTION
+    ══════════════════════════════════════════════ */
+    #cta {
+      padding: var(--space-3xl) 40px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(28,63,140,0.05), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner {
+      position: relative;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+    .cta-inner .f-label { color: var(--muted); margin-bottom: 28px; }
+    .cta-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(56px, 9vw, 128px);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 0.88;
+      margin-bottom: 32px;
+    }
+    .cta-headline em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      color: var(--blue);
+      display: block;
+      font-size: 0.75em;
+    }
+    .cta-body {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-lg);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: var(--text);
+      color: var(--text-inv);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .btn-primary:hover { background: var(--blue); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 32px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .btn-outline:hover { border-color: var(--text); color: var(--text); }
+    .btn-outline:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    footer {
+      background: var(--bg-dark);
+      color: rgba(250,250,247,0.5);
+      border-top: 1px solid var(--border-dark);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      max-width: 1400px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .footer-col {
+      padding: 56px 40px;
+      border-right: 1px solid var(--border-dark);
+    }
+    .footer-col:last-child { border-right: none; }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-inv);
+      margin-bottom: 16px;
+    }
+    .footer-logo span { color: var(--blue); }
+    .footer-tagline { font-size: 13px; line-height: 1.7; }
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(250,250,247,0.3);
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(250,250,247,0.5);
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--text-inv); }
+
+    .footer-social { display: flex; gap: 16px; margin-top: 24px; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border-dark);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(250,250,247,0.4);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .social-link:hover { border-color: rgba(250,250,247,0.3); color: var(--text-inv); }
+    .social-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy { font-size: 12px; letter-spacing: 0.04em; }
+
+    /* ═══════════════════════════════════════════
+       FAQ
+    ══════════════════════════════════════════════ */
+    #faq {
+      border-top: 1px solid var(--border);
+      padding: var(--space-3xl) 0;
+    }
+    .faq-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--space-3xl);
+      padding: 0 40px;
+    }
+    .faq-left .f-label { color: var(--muted); margin-bottom: 20px; }
+    .faq-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(40px, 5vw, 64px);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 0.9;
+    }
+    .faq-list { list-style: none; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      gap: 16px;
+      transition: color 0.2s ease;
+    }
+    .faq-question:hover { color: var(--blue); }
+    .faq-question:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s var(--ease-out), background 0.2s ease, border-color 0.2s ease;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    .faq-item.open .faq-icon svg { color: white; }
+    .faq-answer {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-out), padding 0.4s var(--ease-out);
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding-bottom: 24px;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 56px 32px 48px; border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-right { min-height: 60vw; }
+      .ice-latte-inner { grid-template-columns: 1fr; }
+      .ice-latte-content { border-left: none; border: 1px solid var(--border); padding: 48px 32px; }
+      .story-inner { grid-template-columns: 1fr; }
+      .story-content { padding: 48px 32px; border-left: none; border-top: 1px solid var(--border-dark); }
+      .menu-grid { grid-template-columns: 1fr 1fr; }
+      .menu-card--featured { grid-row: span 1; }
+      .menu-card--featured .card-img { height: 280px; }
+      .menu-card--wide { grid-column: span 2; }
+      .stats-inner { grid-template-columns: 1fr; border-left: none; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left; padding: 32px 0; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .location-inner { grid-template-columns: 1fr; }
+      .location-left { padding: 56px 32px; border-right: none; border-bottom: 1px solid var(--border); }
+      .location-right { padding: 48px 32px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .faq-inner { grid-template-columns: 1fr; gap: var(--space-xl); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links, .nav-right { display: none; }
+      .nav-hamburger { display: flex; margin-left: auto; }
+      .nav-mobile { padding: 60px 24px; }
+
+      .hero-left { padding: 48px 24px 40px; }
+      .hero-title { font-size: clamp(72px, 20vw, 120px); }
+
+      .ice-latte-content { padding: 40px 24px; }
+      .story-content { padding: 40px 24px; }
+      .location-left, .location-right { padding: 40px 24px; }
+
+      .menu-grid { grid-template-columns: 1fr; border-left: none; }
+      .menu-card--wide { grid-column: span 1; }
+      .menu-card--wide .card-inner { flex-direction: column; }
+      .menu-card--wide .card-body { border-left: none; border-top: 1px solid var(--border); }
+      .menu-header { padding: 0 24px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+
+      #stats { padding: var(--space-xl) 24px; }
+      .stats-inner { grid-template-columns: 1fr; }
+
+      #cta { padding: var(--space-2xl) 24px; }
+      .cta-actions { flex-direction: column; }
+
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-col { padding: 36px 24px; border-right: none; border-bottom: 1px solid var(--border-dark); }
+      .footer-bottom { padding: 16px 24px; flex-direction: column; gap: 8px; text-align: center; }
+
+      .testimonials-header { padding: 0 24px; }
+      #menu { padding: var(--space-2xl) 0; }
+      .faq-inner { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Kadıköy <span>Coffee</span></a>
+      <ul class="nav-links">
+        <li><a href="#ice-latte">Ice Latte</a></li>
+        <li><a href="#menu" data-i18n="nav.menu">Menü</a></li>
+        <li><a href="#story" data-i18n="nav.story">Hikayemiz</a></li>
+        <li><a href="#location" data-i18n="nav.location">Konum</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Language / Dil">
+          <button class="lang-btn active" data-lang="tr">TR</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <a href="#cta" class="nav-cta" data-i18n="nav.cta">Randevu Al</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Menüyü aç" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav-mobile" role="dialog" aria-label="Navigasyon">
+    <a href="#ice-latte">Ice Latte</a>
+    <a href="#menu" data-i18n="nav.menu">Menü</a>
+    <a href="#story" data-i18n="nav.story">Hikayemiz</a>
+    <a href="#location" data-i18n="nav.location">Konum</a>
+    <a href="#cta" data-i18n="nav.cta">Randevu Al</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Ana Sayfa">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        <span class="f-label" style="color:var(--muted)" data-i18n="hero.eyebrow">Yakında Açılıyor — 19 Nisan 2026</span>
+      </div>
+
+      <div class="hero-main">
+        <h1 class="hero-title">
+          <span>Ice</span>
+          <span class="accent">Latte</span>
+          <span class="accent-serif" data-i18n="hero.location">Kadıköy'de</span>
+        </h1>
+        <p class="hero-tagline" data-i18n="hero.tagline">Kadıköy'ün en yeni buluşma noktası. Soğuk kahve, sıcak atmosfer. 19 Nisan'da kapılarımız açılıyor.</p>
+      </div>
+
+      <div class="hero-bottom">
+        <a href="#cta" class="hero-launch-badge">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
+          </svg>
+          <span data-i18n="hero.badge">19 Nisan'da Geliyor</span>
+        </a>
+        <div class="hero-scroll-hint">
+          <div class="scroll-arrow"></div>
+          <span data-i18n="hero.scroll">Kaydır</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=85" alt="Kadıköy Coffee — Ice Latte" loading="eager" />
+      <div class="hero-right-caption">
+        <p data-i18n="hero.caption">Yeni Lezzetimiz</p>
+        <strong>Ice Latte</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <!-- repeated for loop -->
+      <span class="ticker-item">Ice Latte <span class="sep">+</span></span>
+      <span class="ticker-item">Specialty Coffee <span class="sep">+</span></span>
+      <span class="ticker-item">Kadıköy <span class="sep">+</span></span>
+      <span class="ticker-item">19 Nisan <span class="sep">+</span></span>
+      <span class="ticker-item">Tek Kökenli Çekirdek <span class="sep">+</span></span>
+      <span class="ticker-item">Soğuk Demleme <span class="sep">+</span></span>
+      <span class="ticker-item">El Yapımı Pastane <span class="sep">+</span></span>
+      <span class="ticker-item">Ice Latte <span class="sep">+</span></span>
+      <span class="ticker-item">Specialty Coffee <span class="sep">+</span></span>
+      <span class="ticker-item">Kadıköy <span class="sep">+</span></span>
+      <span class="ticker-item">19 Nisan <span class="sep">+</span></span>
+      <span class="ticker-item">Tek Kökenli Çekirdek <span class="sep">+</span></span>
+      <span class="ticker-item">Soğuk Demleme <span class="sep">+</span></span>
+      <span class="ticker-item">El Yapımı Pastane <span class="sep">+</span></span>
+    </div>
+  </div>
+
+  <!-- ICE LATTE FEATURE -->
+  <section id="ice-latte" aria-labelledby="ice-latte-title">
+    <div class="ice-latte-inner">
+      <div class="ice-latte-media img-wrap">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80" alt="Ice Latte yakın çekim" loading="lazy" />
+        <div class="ice-latte-media-tag">Fotoğraf — Stüdyo</div>
+      </div>
+      <div class="ice-latte-content reveal">
+        <span class="f-label" data-i18n="il.label">Yeni Ürün</span>
+        <div class="launch-chip">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" fill="currentColor"/></svg>
+          <span data-i18n="il.chip">19 Nisan'da Geliyor</span>
+        </div>
+        <h2 class="ice-latte-headline" id="ice-latte-title">
+          <span data-i18n="il.title1">Yeni Bir</span>
+          <em data-i18n="il.title2">Serin Başlangıç</em>
+        </h2>
+        <p class="ice-latte-body" data-i18n-html="il.body">
+          Soğuk demlenmiş, <strong>tek kökenli Etiyopya çekirdeğiyle</strong> hazırlanan Ice Latte'miz. Kadifemsi doku, tazeleyici aromalar. Taze sütün yumuşaklığıyla buluşan doğal kahve yağları.
+        </p>
+        <div class="flavor-tags">
+          <span class="flavor-tag" data-i18n="il.flavor1">Yasemin Çiçeği</span>
+          <span class="flavor-tag">Bergamot</span>
+          <span class="flavor-tag" data-i18n="il.flavor3">Karamel</span>
+          <span class="flavor-tag" data-i18n="il.flavor4">Kakao</span>
+        </div>
+        <a href="#cta" class="cta-link">
+          <span data-i18n="il.cta">Lansmanı Kaçırma</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story" aria-labelledby="story-title">
+    <div class="story-inner">
+      <div class="story-media img-wrap">
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=80" alt="Kahve demleme süreci" loading="lazy" />
+        <div class="story-overlay"></div>
+      </div>
+      <div class="story-content reveal">
+        <span class="f-label" data-i18n="story.label">Hikayemiz</span>
+        <h2 class="story-headline" id="story-title">
+          <span data-i18n="story.title1">Bir Fincanın</span>
+          <em data-i18n="story.title2">Ötesinde</em>
+        </h2>
+        <p class="story-body" data-i18n-html="story.body1">
+          Kadıköy Coffee, <strong>kaliteli kahvenin herkes için erişilebilir olması gerektiğine</strong> inanan üç barista tarafından kuruldu. Her çekirdeği kaynağından takip ediyor, her demlemede tutarlılık için çalışıyoruz.
+        </p>
+        <p class="story-body" data-i18n-html="story.body2">
+          Çiftçilerle doğrudan iş birliği yaparak hem üreticiye hem de size dürüst bir fincan sunuyoruz. <strong>Lüks değil, dürüstlük.</strong>
+        </p>
+        <div class="story-rule"></div>
+        <div class="story-stat">
+          <strong>12+</strong>
+          <span data-i18n="story.stat">Ülkeden Tek Kökenli Çekirdek</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" aria-labelledby="menu-title">
+    <div class="menu-header reveal">
+      <h2 class="menu-title" id="menu-title">
+        <span data-i18n="menu.title">Menü</span>
+        <span class="sub" data-i18n="menu.sub">Her fincan, özenle seçilmiş çekirdek ve doğru teknikle hazırlanır.</span>
+      </h2>
+      <a href="#cta" class="menu-view-all" data-i18n="menu.viewAll">Tüm Menü</a>
+    </div>
+    <div class="menu-grid">
+      <!-- Featured: Ice Latte -->
+      <article class="menu-card menu-card--featured" tabindex="0" aria-label="Ice Latte">
+        <div class="card-img img-wrap">
+          <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=700&q=80" alt="Ice Latte" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <p class="card-category" data-i18n="menu.cold">Soğuk İçecekler</p>
+          <h3 class="card-name">Ice Latte</h3>
+          <p class="card-desc" data-i18n="menu.il.desc">Etiyopya çekirdeği, soğuk demleme, taze süt. Günün her saatine.</p>
+          <div class="card-footer">
+            <span class="card-price">89 ₺</span>
+            <span class="card-tag-new" data-i18n="menu.il.tag">Yeni</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Espresso -->
+      <article class="menu-card menu-card--sm" tabindex="0" aria-label="Double Espresso">
+        <div class="card-img img-wrap">
+          <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=500&q=80" alt="Double Espresso" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <p class="card-category">Espresso</p>
+          <h3 class="card-name">Double Espresso</h3>
+          <p class="card-desc" data-i18n="menu.esp.desc">Konsantre, derin, kalıcı.</p>
+          <div class="card-footer">
+            <span class="card-price">52 ₺</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Flat White -->
+      <article class="menu-card menu-card--sm" tabindex="0" aria-label="Flat White">
+        <div class="card-img img-wrap">
+          <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=500&q=80" alt="Flat White" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <p class="card-category" data-i18n="menu.milk">Sütlü İçecekler</p>
+          <h3 class="card-name">Flat White</h3>
+          <p class="card-desc" data-i18n="menu.fw.desc">Ristretto bazlı, kadifemsi mikro süt köpüğü.</p>
+          <div class="card-footer">
+            <span class="card-price">68 ₺</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Croissant wide -->
+      <article class="menu-card menu-card--wide" tabindex="0" aria-label="Butter Croissant">
+        <div class="card-inner">
+          <div class="card-img img-wrap menu-card--wide">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=80" alt="Butter Croissant" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <p class="card-category" data-i18n="menu.bakery">Pastane</p>
+            <h3 class="card-name">Butter Croissant</h3>
+            <p class="card-desc" data-i18n="menu.cr.desc">Günlük taze pişirilmiş, katmanlı tereyağı hamuru. Her sabah sınırlı sayıda.</p>
+            <div class="card-footer">
+              <span class="card-price">64 ₺</span>
+              <span class="card-tag-new" data-i18n="menu.cr.tag">Günlük Taze</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats" aria-label="Rakamlarla Kadıköy Coffee">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num">12<sup style="font-size:0.45em;vertical-align:super">+</sup></div>
+        <div class="stat-label" data-i18n="stats.l1">Tek Kökenli Çekirdek</div>
+      </div>
+      <div class="stat-item reveal reveal-d1">
+        <div class="stat-num">3</div>
+        <div class="stat-label" data-i18n="stats.l2">Barista Kurucumuz</div>
+      </div>
+      <div class="stat-item reveal reveal-d2">
+        <div class="stat-num">1</div>
+        <div class="stat-label" data-i18n="stats.l3">Yeni Başlangıç — 19 Nisan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" aria-labelledby="testimonials-title">
+    <div class="testimonials-header reveal">
+      <span class="f-label" data-i18n="test.label">Müşterilerimiz</span>
+      <h2 id="testimonials-title" data-i18n="test.title">Ne Dediler?</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <div class="testimonial-quote">&ldquo;</div>
+        <p class="testimonial-text" data-i18n-html="test.t1">Ice Latte'yi ilk tattığımda geri dönmemek için hiçbir nedenim kalmadı. <strong>Şehrin en iyi cold brew'u</strong> — tartışmasız.</p>
+        <div class="testimonial-author">
+          <div class="author-img">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80" alt="Selin Aydın" loading="lazy" />
+          </div>
+          <div class="author-info">
+            <p class="author-name">Selin Aydın</p>
+            <p class="author-detail">Food Blogger, Istanbul Bites</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial reveal reveal-d1">
+        <div class="testimonial-quote">&ldquo;</div>
+        <p class="testimonial-text" data-i18n-html="test.t2">Espressolar inanılmaz dengeli, pastaneler günlük taze. <strong>Kadıköy'ün eksik parçasıydı</strong> bu mekan.</p>
+        <div class="testimonial-author">
+          <div class="author-img">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Emre Kaya" loading="lazy" />
+          </div>
+          <div class="author-info">
+            <p class="author-name">Emre Kaya</p>
+            <p class="author-detail">Müzisyen & Kadıköy Sakini</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="faq-inner">
+      <div class="faq-left reveal">
+        <span class="f-label" data-i18n="faq.label">Merak Edilenler</span>
+        <h2 class="faq-title" id="faq-title" data-i18n-html="faq.title">Sık Sorulan<br>Sorular</h2>
+      </div>
+      <ul class="faq-list reveal reveal-d1" role="list">
+        <li class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q1">Ice Latte'niz hangi çekirdekle yapılıyor?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M2 6H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a1">
+            Etiyopya Yirgacheffe bölgesinden, doğrudan çiftçi işbirliğiyle temin ettiğimiz tek kökenli çekirdek kullanıyoruz. Yasemin ve bergamot notaları, Ice Latte'de özellikle ön plana çıkıyor.
+          </div>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q2">Çalışma saatleriniz neler?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M2 6H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a2">
+            Hafta içi 08:00–20:00, hafta sonu 09:00–21:00 açık olacağız. Açılış gününde özel etkinlikler için saatler farklılık gösterebilir.
+          </div>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q3">Vegan seçenekleriniz var mı?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M2 6H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a3">
+            Evet! Yulaf sütü, badem sütü ve soya sütü alternatiflerimiz mevcut. Ice Latte dahil tüm içeceklerimiz vegan süt seçenekleriyle sipariş edilebilir.
+          </div>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q4">Açılış lansmanına nasıl katılabilirim?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M2 6H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a4">
+            Aşağıdaki formu doldurarak listeye kaydolun. 19 Nisan'da özel davetliler için erken açılış, ilk fincan Ice Latte ikramı ve barista workshopu planlanıyor.
+          </div>
+        </li>
+        <li class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-i18n="faq.q5">Loyalty programınız var mı?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M2 6H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer" role="region" data-i18n="faq.a5">
+            Açılışla birlikte dijital kart sistemimiz devreye giriyor. Her 10 içecekte bir fincan bedava, doğum gününde sürpriz ikramlar ve üyelere özel çekirdek tadım günleri.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section id="location" aria-labelledby="location-title">
+    <div class="location-inner">
+      <div class="location-left reveal">
+        <span class="f-label" data-i18n="loc.label">Bizi Bulun</span>
+        <h2 class="location-address" id="location-title">
+          <span class="district">Kadıköy</span>
+          Moda Cad.<br>No: 42
+        </h2>
+        <p class="location-body" data-i18n="loc.body">Moda sahiline yürüme mesafesinde, tarihi Kadıköy çarşısının kalbinde. En yakın metro: Kadıköy M4.</p>
+        <div class="opening-note" data-i18n-html="loc.note">
+          <strong>19 Nisan'da Açılıyoruz.</strong> Erken listeye kaydolun, özel davetiye alın.
+        </div>
+      </div>
+      <div class="location-right reveal reveal-d1">
+        <span class="f-label" data-i18n="loc.hours">Çalışma Saatleri</span>
+        <ul class="hours-list">
+          <li class="hours-item">
+            <span class="hours-day" data-i18n="loc.d1">Pazartesi – Cuma</span>
+            <span class="hours-time">08:00 – 20:00</span>
+          </li>
+          <li class="hours-item">
+            <span class="hours-day" data-i18n="loc.d2">Cumartesi</span>
+            <span class="hours-time">09:00 – 21:00</span>
+          </li>
+          <li class="hours-item">
+            <span class="hours-day" data-i18n="loc.d3">Pazar</span>
+            <span class="hours-time">09:00 – 20:00</span>
+          </li>
+          <li class="hours-item">
+            <span class="hours-day" data-i18n="loc.d4">19 Nisan — Açılış</span>
+            <span class="hours-time launch">10:00 – 22:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" aria-labelledby="cta-title">
+    <div class="cta-inner">
+      <span class="f-label reveal" data-i18n="cta.label">Listeye Katıl</span>
+      <h2 class="cta-headline reveal reveal-d1" id="cta-title">
+        <span data-i18n="cta.title1">İlk Siz</span>
+        <em data-i18n="cta.title2">Tadın</em>
+      </h2>
+      <p class="cta-body reveal reveal-d2" data-i18n="cta.body">19 Nisan lansmanından önce e-posta listemize katılın. İlk 100 kişiye ücretsiz Ice Latte ikramı.</p>
+      <div class="cta-actions reveal reveal-d3">
+        <a href="mailto:merhaba@kadikoycoffee.com" class="btn-primary">
+          <span data-i18n="cta.btn1">Hemen Kaydol</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#menu" class="btn-outline" data-i18n="cta.btn2">Menüyü İncele</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-logo">Kadıköy <span>Coffee</span></div>
+        <p class="footer-tagline" data-i18n="footer.tagline">Tek kökenli çekirdek, doğru teknik, dürüst bir fincan. Kadıköy'ün yeni buluşma noktası.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Twitter / X">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l16 16M4 20L20 4"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title" data-i18n="footer.explore">Keşfet</p>
+        <ul class="footer-links">
+          <li><a href="#ice-latte">Ice Latte</a></li>
+          <li><a href="#menu" data-i18n="nav.menu">Menü</a></li>
+          <li><a href="#story" data-i18n="nav.story">Hikayemiz</a></li>
+          <li><a href="#faq" data-i18n="footer.faq">SSS</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title" data-i18n="footer.contact">İletişim</p>
+        <ul class="footer-links">
+          <li><a href="mailto:merhaba@kadikoycoffee.com">merhaba@kadikoycoffee.com</a></li>
+          <li><a href="tel:+902161234567">+90 216 123 45 67</a></li>
+          <li><a href="#location">Moda Cad. No: 42, Kadıköy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title" data-i18n="footer.launch">Lansman</p>
+        <ul class="footer-links">
+          <li><a href="#cta" data-i18n="footer.signup">Listeye Kaydol</a></li>
+          <li><a href="#cta">Barista Workshop</a></li>
+          <li><a href="#cta" data-i18n="footer.corporate">Kurumsal İletişim</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy" data-i18n="footer.copy">© 2026 Kadıköy Coffee. Tüm hakları saklıdır.</p>
+      <p class="footer-copy" data-i18n="footer.location">İstanbul, Türkiye</p>
+    </div>
+  </footer>
+
+  <script defer>
+    /* ─── i18n ──── */
+    const TRANSLATIONS = {
+      tr: {
+        'nav.menu': 'Menü',
+        'nav.story': 'Hikayemiz',
+        'nav.location': 'Konum',
+        'nav.cta': 'Randevu Al',
+        'hero.eyebrow': 'Yakında Açılıyor — 19 Nisan 2026',
+        'hero.location': 'Kadıköy\'de',
+        'hero.tagline': 'Kadıköy\'ün en yeni buluşma noktası. Soğuk kahve, sıcak atmosfer. 19 Nisan\'da kapılarımız açılıyor.',
+        'hero.badge': '19 Nisan\'da Geliyor',
+        'hero.scroll': 'Kaydır',
+        'hero.caption': 'Yeni Lezzetimiz',
+        'il.label': 'Yeni Ürün',
+        'il.chip': '19 Nisan\'da Geliyor',
+        'il.title1': 'Yeni Bir',
+        'il.title2': 'Serin Başlangıç',
+        'il.body': 'Soğuk demlenmiş, <strong>tek kökenli Etiyopya çekirdeğiyle</strong> hazırlanan Ice Latte\'miz. Kadifemsi doku, tazeleyici aromalar. Taze sütün yumuşaklığıyla buluşan doğal kahve yağları.',
+        'il.flavor1': 'Yasemin Çiçeği',
+        'il.flavor3': 'Karamel',
+        'il.flavor4': 'Kakao',
+        'il.cta': 'Lansmanı Kaçırma',
+        'story.label': 'Hikayemiz',
+        'story.title1': 'Bir Fincanın',
+        'story.title2': 'Ötesinde',
+        'story.body1': 'Kadıköy Coffee, <strong>kaliteli kahvenin herkes için erişilebilir olması gerektiğine</strong> inanan üç barista tarafından kuruldu. Her çekirdeği kaynağından takip ediyor, her demlemede tutarlılık için çalışıyoruz.',
+        'story.body2': 'Çiftçilerle doğrudan iş birliği yaparak hem üreticiye hem de size dürüst bir fincan sunuyoruz. <strong>Lüks değil, dürüstlük.</strong>',
+        'story.stat': 'Ülkeden Tek Kökenli Çekirdek',
+        'menu.title': 'Menü',
+        'menu.sub': 'Her fincan, özenle seçilmiş çekirdek ve doğru teknikle hazırlanır.',
+        'menu.viewAll': 'Tüm Menü',
+        'menu.cold': 'Soğuk İçecekler',
+        'menu.milk': 'Sütlü İçecekler',
+        'menu.bakery': 'Pastane',
+        'menu.il.desc': 'Etiyopya çekirdeği, soğuk demleme, taze süt. Günün her saatine.',
+        'menu.il.tag': 'Yeni',
+        'menu.esp.desc': 'Konsantre, derin, kalıcı.',
+        'menu.fw.desc': 'Ristretto bazlı, kadifemsi mikro süt köpüğü.',
+        'menu.cr.desc': 'Günlük taze pişirilmiş, katmanlı tereyağı hamuru. Her sabah sınırlı sayıda.',
+        'menu.cr.tag': 'Günlük Taze',
+        'stats.l1': 'Tek Kökenli Çekirdek',
+        'stats.l2': 'Barista Kurucumuz',
+        'stats.l3': 'Yeni Başlangıç — 19 Nisan',
+        'test.label': 'Müşterilerimiz',
+        'test.title': 'Ne Dediler?',
+        'test.t1': 'Ice Latte\'yi ilk tattığımda geri dönmemek için hiçbir nedenim kalmadı. <strong>Şehrin en iyi cold brew\'u</strong> — tartışmasız.',
+        'test.t2': 'Espressolar inanılmaz dengeli, pastaneler günlük taze. <strong>Kadıköy\'ün eksik parçasıydı</strong> bu mekan.',
+        'faq.label': 'Merak Edilenler',
+        'faq.title': 'Sık Sorulan<br>Sorular',
+        'faq.q1': 'Ice Latte\'niz hangi çekirdekle yapılıyor?',
+        'faq.a1': 'Etiyopya Yirgacheffe bölgesinden, doğrudan çiftçi işbirliğiyle temin ettiğimiz tek kökenli çekirdek kullanıyoruz. Yasemin ve bergamot notaları, Ice Latte\'de özellikle ön plana çıkıyor.',
+        'faq.q2': 'Çalışma saatleriniz neler?',
+        'faq.a2': 'Hafta içi 08:00–20:00, hafta sonu 09:00–21:00 açık olacağız. Açılış gününde özel etkinlikler için saatler farklılık gösterebilir.',
+        'faq.q3': 'Vegan seçenekleriniz var mı?',
+        'faq.a3': 'Evet! Yulaf sütü, badem sütü ve soya sütü alternatiflerimiz mevcut. Ice Latte dahil tüm içeceklerimiz vegan süt seçenekleriyle sipariş edilebilir.',
+        'faq.q4': 'Açılış lansmanına nasıl katılabilirim?',
+        'faq.a4': 'Aşağıdaki formu doldurarak listeye kaydolun. 19 Nisan\'da özel davetliler için erken açılış, ilk fincan Ice Latte ikramı ve barista workshopu planlanıyor.',
+        'faq.q5': 'Loyalty programınız var mı?',
+        'faq.a5': 'Açılışla birlikte dijital kart sistemimiz devreye giriyor. Her 10 içecekte bir fincan bedava, doğum gününde sürpriz ikramlar ve üyelere özel çekirdek tadım günleri.',
+        'loc.label': 'Bizi Bulun',
+        'loc.body': 'Moda sahiline yürüme mesafesinde, tarihi Kadıköy çarşısının kalbinde. En yakın metro: Kadıköy M4.',
+        'loc.note': '<strong>19 Nisan\'da Açılıyoruz.</strong> Erken listeye kaydolun, özel davetiye alın.',
+        'loc.hours': 'Çalışma Saatleri',
+        'loc.d1': 'Pazartesi – Cuma',
+        'loc.d2': 'Cumartesi',
+        'loc.d3': 'Pazar',
+        'loc.d4': '19 Nisan — Açılış',
+        'cta.label': 'Listeye Katıl',
+        'cta.title1': 'İlk Siz',
+        'cta.title2': 'Tadın',
+        'cta.body': '19 Nisan lansmanından önce e-posta listemize katılın. İlk 100 kişiye ücretsiz Ice Latte ikramı.',
+        'cta.btn1': 'Hemen Kaydol',
+        'cta.btn2': 'Menüyü İncele',
+        'footer.tagline': 'Tek kökenli çekirdek, doğru teknik, dürüst bir fincan. Kadıköy\'ün yeni buluşma noktası.',
+        'footer.explore': 'Keşfet',
+        'footer.faq': 'SSS',
+        'footer.contact': 'İletişim',
+        'footer.launch': 'Lansman',
+        'footer.signup': 'Listeye Kaydol',
+        'footer.corporate': 'Kurumsal İletişim',
+        'footer.copy': '© 2026 Kadıköy Coffee. Tüm hakları saklıdır.',
+        'footer.location': 'İstanbul, Türkiye',
+      },
+      en: {
+        'nav.menu': 'Menu',
+        'nav.story': 'Our Story',
+        'nav.location': 'Location',
+        'nav.cta': 'Get in Touch',
+        'hero.eyebrow': 'Opening Soon — April 19, 2026',
+        'hero.location': 'in Kadıköy',
+        'hero.tagline': 'Kadıköy\'s newest gathering spot. Cold coffee, warm atmosphere. Opening April 19.',
+        'hero.badge': 'Arriving April 19',
+        'hero.scroll': 'Scroll',
+        'hero.caption': 'Our New Drink',
+        'il.label': 'New Product',
+        'il.chip': 'Arriving April 19',
+        'il.title1': 'A Fresh',
+        'il.title2': 'Cool Start',
+        'il.body': 'Cold-brewed with <strong>single-origin Ethiopian beans</strong>, our Ice Latte offers a velvety texture, refreshing aromas, and natural coffee oils meeting the smoothness of fresh milk.',
+        'il.flavor1': 'Jasmine Blossom',
+        'il.flavor3': 'Caramel',
+        'il.flavor4': 'Cacao',
+        'il.cta': 'Don\'t Miss the Launch',
+        'story.label': 'Our Story',
+        'story.title1': 'Beyond',
+        'story.title2': 'a Cup',
+        'story.body1': 'Kadıköy Coffee was founded by three baristas who believe <strong>quality coffee should be accessible to everyone</strong>. We trace every bean to its source and work for consistency in every brew.',
+        'story.body2': 'By partnering directly with farmers, we offer an honest cup — fair to the grower, honest to you. <strong>Not luxury, just integrity.</strong>',
+        'story.stat': 'Single-Origin Origins',
+        'menu.title': 'Menu',
+        'menu.sub': 'Every cup, prepared with carefully selected beans and the right technique.',
+        'menu.viewAll': 'Full Menu',
+        'menu.cold': 'Cold Drinks',
+        'menu.milk': 'Milk Drinks',
+        'menu.bakery': 'Bakery',
+        'menu.il.desc': 'Ethiopian beans, cold brew, fresh milk. Perfect any time of day.',
+        'menu.il.tag': 'New',
+        'menu.esp.desc': 'Concentrated, deep, lasting.',
+        'menu.fw.desc': 'Ristretto-based, velvety micro-foam.',
+        'menu.cr.desc': 'Freshly baked daily, layered butter pastry. Limited each morning.',
+        'menu.cr.tag': 'Daily Fresh',
+        'stats.l1': 'Single-Origin Beans',
+        'stats.l2': 'Founding Baristas',
+        'stats.l3': 'New Beginning — April 19',
+        'test.label': 'Our Customers',
+        'test.title': 'What They Said',
+        'test.t1': 'After my first taste of the Ice Latte, I had no reason not to come back. <strong>The city\'s best cold brew</strong> — hands down.',
+        'test.t2': 'The espressos are incredibly balanced, the pastries freshly baked daily. <strong>This place was exactly what Kadıköy was missing.</strong>',
+        'faq.label': 'FAQ',
+        'faq.title': 'Frequently<br>Asked Questions',
+        'faq.q1': 'What beans are used in your Ice Latte?',
+        'faq.a1': 'We use single-origin beans from the Yirgacheffe region of Ethiopia, sourced through direct farmer partnerships. Jasmine and bergamot notes shine especially in the Ice Latte.',
+        'faq.q2': 'What are your opening hours?',
+        'faq.a2': 'Weekdays 08:00–20:00, weekends 09:00–21:00. Hours may vary on opening day due to special events.',
+        'faq.q3': 'Do you have vegan options?',
+        'faq.a3': 'Yes! We offer oat milk, almond milk, and soy milk alternatives. All drinks including the Ice Latte can be ordered with plant-based milk.',
+        'faq.q4': 'How can I join the opening launch?',
+        'faq.a4': 'Fill in the form below to join the list. On April 19, early access, a free Ice Latte, and a barista workshop are planned for invited guests.',
+        'faq.q5': 'Do you have a loyalty program?',
+        'faq.a5': 'Our digital card system launches with the opening. Every 10 drinks earn you one free, plus birthday surprises and members-only bean tasting days.',
+        'loc.label': 'Find Us',
+        'loc.body': 'A short walk from the Moda waterfront, in the heart of historic Kadıköy market. Nearest metro: Kadıköy M4.',
+        'loc.note': '<strong>Opening April 19.</strong> Join the early list and receive a special invitation.',
+        'loc.hours': 'Opening Hours',
+        'loc.d1': 'Monday – Friday',
+        'loc.d2': 'Saturday',
+        'loc.d3': 'Sunday',
+        'loc.d4': 'April 19 — Opening Day',
+        'cta.label': 'Join the List',
+        'cta.title1': 'Be the',
+        'cta.title2': 'First to Taste',
+        'cta.body': 'Sign up to our email list before the April 19 launch. Free Ice Latte for the first 100 people.',
+        'cta.btn1': 'Sign Up Now',
+        'cta.btn2': 'Browse Menu',
+        'footer.tagline': 'Single-origin beans, the right technique, an honest cup. Kadıköy\'s new gathering spot.',
+        'footer.explore': 'Explore',
+        'footer.faq': 'FAQ',
+        'footer.contact': 'Contact',
+        'footer.launch': 'Launch',
+        'footer.signup': 'Join the List',
+        'footer.corporate': 'Corporate Contact',
+        'footer.copy': '© 2026 Kadıköy Coffee. All rights reserved.',
+        'footer.location': 'Istanbul, Turkey',
+      }
+    };
+
+    let currentLang = 'tr';
+
+    function applyLang(lang) {
+      const t = TRANSLATIONS[lang];
+      if (!t) return;
+      currentLang = lang;
+      document.documentElement.lang = lang === 'tr' ? 'tr' : 'en';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+    });
+
+    /* ─── NAV HAMBURGER ──── */
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileMenu = document.querySelector('.nav-mobile');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* ─── REVEAL ON SCROLL ──── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ─── FAQ ACCORDION ──── */
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item.open').forEach(open => {
+          open.classList.remove('open');
+          open.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
