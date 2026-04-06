@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profilim — Kadıköy Coffee</title>
+  <meta name="description" content="Kadıköy Coffee üyelik profili" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0c0b;
+      --bg2:       #141210;
+      --surface:   #1c1916;
+      --surface2:  #232019;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.12);
+      --text:      #f0ede8;
+      --muted:     #8a8070;
+      --blue:      #2563a8;
+      --blue-mid:  #1e4f8a;
+      --amber:     #c8913a;
+      --amber-lt:  #e8b05a;
+      --red:       #c0392b;
+      --green:     #27ae60;
+
+      --shadow-color: 10, 8, 5;
+      --space-xs: 4px; --space-sm: 8px; --space-md: 16px;
+      --space-lg: 24px; --space-xl: 48px; --space-2xl: 80px;
+
+      --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-xl);
+      height: 60px;
+      background: rgba(13,12,11,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .topbar-logo span { color: var(--amber); }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--border2); }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      flex: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-2xl);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--amber) 0%, var(--blue) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      color: #fff;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+      box-shadow:
+        0 4px 12px rgba(var(--shadow-color), 0.3),
+        0 0 0 3px rgba(200,145,58,0.15);
+    }
+
+    .header-info { flex: 1; }
+    .header-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .header-username {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .header-username span { color: var(--amber); }
+    .member-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(200,145,58,0.1);
+      border: 1px solid rgba(200,145,58,0.25);
+      color: var(--amber-lt);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.03em;
+    }
+    .member-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--amber);
+      border-radius: 50%;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: var(--space-md);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color), 0.08),
+        0 4px 16px rgba(var(--shadow-color), 0.12);
+    }
+
+    /* ── FORM FIELDS ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md) var(--space-lg);
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+      width: 100%;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(200,145,58,0.12);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.6;
+    }
+
+    .field select option { background: var(--bg2); }
+
+    /* ── SAVE BUTTON ── */
+    .save-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .btn-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--amber);
+      color: #0d0c0b;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 28px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .btn-save:hover { background: var(--amber-lt); }
+    .btn-save:active { transform: scale(0.98); }
+    .btn-save:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .save-feedback {
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .save-feedback.show { opacity: 1; }
+    .save-feedback.success { color: var(--green); }
+    .save-feedback.error   { color: var(--red); }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── NOT LOGGED IN ── */
+    .not-found {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: var(--space-lg);
+      text-align: center;
+    }
+    .not-found .icon {
+      font-size: 64px;
+      opacity: 0.4;
+    }
+    .not-found h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+    }
+    .not-found p { color: var(--muted); font-size: 15px; }
+    .not-found a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--amber);
+      color: #0d0c0b;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .not-found a:hover { background: var(--amber-lt); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: var(--space-xl);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .topbar { padding: 0 var(--space-md); }
+      main { padding: var(--space-xl) var(--space-md); }
+      .page-header { flex-direction: column; align-items: flex-start; gap: var(--space-md); }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .full { grid-column: 1; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── ENTRANCE ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page-header { animation: fadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    .stats-row   { animation: fadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both; }
+    .section     { animation: fadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.16s both; }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <a href="index.html" class="topbar-logo">Kadıköy <span>Coffee</span></a>
+    <a href="index.html" class="back-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Ana Sayfaya Dön
+    </a>
+  </header>
+
+  <main id="app">
+
+    <!-- NOT LOGGED IN STATE -->
+    <div class="not-found" id="not-found">
+      <div class="icon">☕</div>
+      <h2>Profil Bulunamadı</h2>
+      <p>Henüz üye değilsiniz veya oturumunuz sona erdi.</p>
+      <a href="index.html#cta">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Hemen Üye Ol
+      </a>
+    </div>
+
+    <!-- PROFILE CONTENT -->
+    <div id="profile-content" style="display:none">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div class="avatar" id="avatar-initials">--</div>
+        <div class="header-info">
+          <h1 class="header-name" id="display-name">—</h1>
+          <p class="header-username">@<span id="display-username">—</span></p>
+          <span class="member-badge" id="member-since">Üye</span>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Üyelik Yılı</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">🥇</div>
+          <div class="stat-label">İlk 100 Üye</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Ücretsiz Ice Latte</div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <form id="profile-form" novalidate>
+
+        <!-- KİŞİSEL BİLGİLER -->
+        <div class="section">
+          <div class="section-label">Kişisel Bilgiler</div>
+          <div class="card">
+            <div class="form-grid">
+              <div class="field">
+                <label for="p-firstname">Ad</label>
+                <input type="text" id="p-firstname" name="firstname" autocomplete="given-name" placeholder="Adınız" />
+              </div>
+              <div class="field">
+                <label for="p-lastname">Soyad</label>
+                <input type="text" id="p-lastname" name="lastname" autocomplete="family-name" placeholder="Soyadınız" />
+              </div>
+              <div class="field">
+                <label for="p-username">Kullanıcı Adı</label>
+                <input type="text" id="p-username" name="username" autocomplete="username" placeholder="kullaniciadi" />
+              </div>
+              <div class="field">
+                <label for="p-birthdate">Doğum Tarihi</label>
+                <input type="date" id="p-birthdate" name="birthdate" />
+              </div>
+              <div class="field full">
+                <label for="p-bio">Hakkımda</label>
+                <textarea id="p-bio" name="bio" placeholder="Kendinizi kısaca tanıtın…"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- İLETİŞİM BİLGİLERİ -->
+        <div class="section">
+          <div class="section-label">İletişim Bilgileri</div>
+          <div class="card">
+            <div class="form-grid">
+              <div class="field">
+                <label for="p-email">E-posta</label>
+                <input type="email" id="p-email" name="email" autocomplete="email" placeholder="ornek@email.com" />
+              </div>
+              <div class="field">
+                <label for="p-phone">Telefon</label>
+                <input type="tel" id="p-phone" name="phone" autocomplete="tel" placeholder="+90 5xx xxx xx xx" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADRES -->
+        <div class="section">
+          <div class="section-label">Adres</div>
+          <div class="card">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="p-address">Sokak / Cadde</label>
+                <input type="text" id="p-address" name="address" autocomplete="street-address" placeholder="Mahalle, Cadde, No" />
+              </div>
+              <div class="field">
+                <label for="p-city">Şehir</label>
+                <input type="text" id="p-city" name="city" autocomplete="address-level2" placeholder="İstanbul" />
+              </div>
+              <div class="field">
+                <label for="p-district">İlçe</label>
+                <input type="text" id="p-district" name="district" autocomplete="address-level3" placeholder="Kadıköy" />
+              </div>
+              <div class="field">
+                <label for="p-postalCode">Posta Kodu</label>
+                <input type="text" id="p-postalCode" name="postalCode" autocomplete="postal-code" placeholder="34000" maxlength="10" />
+              </div>
+              <div class="field">
+                <label for="p-country">Ülke</label>
+                <select id="p-country" name="country">
+                  <option value="TR" selected>Türkiye</option>
+                  <option value="DE">Almanya</option>
+                  <option value="NL">Hollanda</option>
+                  <option value="GB">İngiltere</option>
+                  <option value="FR">Fransa</option>
+                  <option value="US">ABD</option>
+                  <option value="OTHER">Diğer</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAVE ROW -->
+        <div class="save-row">
+          <div class="save-feedback" id="save-feedback"></div>
+          <button type="submit" class="btn-save" id="save-btn">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 7.5L5.5 11L13 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Değişiklikleri Kaydet
+          </button>
+        </div>
+
+      </form>
+
+    </div><!-- /profile-content -->
+
+  </main>
+
+  <footer>
+    <p>© 2026 Kadıköy Coffee · İstanbul, Türkiye</p>
+  </footer>
+
+  <script>
+    const FIELDS = ['firstname','lastname','username','email','phone','address','city','district','postalCode','country','birthdate','bio'];
+
+    function getUser() {
+      try { return JSON.parse(localStorage.getItem('kc_user')) || null; }
+      catch { return null; }
+    }
+
+    function saveUser(data) {
+      localStorage.setItem('kc_user', JSON.stringify(data));
+    }
+
+    function initials(firstname, lastname) {
+      const f = (firstname || '').trim()[0] || '';
+      const l = (lastname  || '').trim()[0] || '';
+      return (f + l).toUpperCase() || '?';
+    }
+
+    function render(user) {
+      // Avatar + header
+      document.getElementById('avatar-initials').textContent = initials(user.firstname, user.lastname);
+      document.getElementById('display-name').textContent    = [user.firstname, user.lastname].filter(Boolean).join(' ') || 'İsimsiz Üye';
+      document.getElementById('display-username').textContent = user.username || '—';
+      document.getElementById('member-since').textContent    = 'Üye' + (user.joinDate ? ' — ' + user.joinDate : '');
+
+      // Populate fields
+      FIELDS.forEach(key => {
+        const el = document.getElementById('p-' + key);
+        if (el && user[key] !== undefined) el.value = user[key];
+      });
+    }
+
+    const user = getUser();
+    const content  = document.getElementById('profile-content');
+    const notFound = document.getElementById('not-found');
+
+    if (!user) {
+      notFound.style.display = 'flex';
+    } else {
+      content.style.display = 'block';
+      render(user);
+    }
+
+    // Save form
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const current = getUser() || {};
+      const saveBtn   = document.getElementById('save-btn');
+      const feedback  = document.getElementById('save-feedback');
+
+      FIELDS.forEach(key => {
+        const el = document.getElementById('p-' + key);
+        if (el) current[key] = el.value;
+      });
+
+      try {
+        saveUser(current);
+        render(current);
+
+        feedback.textContent = '✓ Bilgiler kaydedildi';
+        feedback.className = 'save-feedback success show';
+
+        saveBtn.disabled = true;
+        setTimeout(() => {
+          feedback.classList.remove('show');
+          saveBtn.disabled = false;
+        }, 2500);
+      } catch {
+        feedback.textContent = '✗ Kaydetme başarısız, tekrar deneyin.';
+        feedback.className = 'save-feedback error show';
+        setTimeout(() => feedback.classList.remove('show'), 3000);
+      }
+    });
+  </script>
+
+</body>
+</html>

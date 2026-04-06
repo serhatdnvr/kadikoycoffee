@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <style>
     /* ─── TOKENS ─────────────────────────────── */
@@ -1198,6 +1199,156 @@
       .faq-inner { grid-template-columns: 1fr; gap: var(--space-xl); }
     }
 
+    /* ═══════════════════════════════════════════
+       SIGNUP MODAL
+    ══════════════════════════════════════════════ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(20,18,16,0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.visible { opacity: 1; }
+    .modal-backdrop[hidden] { display: none; }
+
+    .modal-panel {
+      background: var(--bg);
+      width: 100%;
+      max-width: 480px;
+      padding: 48px 48px 40px;
+      position: relative;
+      border: 1px solid var(--border);
+      transform: translateY(20px);
+      transition: transform 0.3s var(--ease-out);
+      box-shadow:
+        0 2px 4px rgba(20,18,16,0.04),
+        0 8px 24px rgba(20,18,16,0.10),
+        0 32px 64px rgba(20,18,16,0.14);
+    }
+    .modal-backdrop.visible .modal-panel { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: color 0.2s ease;
+      border-radius: 0;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-close:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    .modal-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .modal-logo span { color: var(--blue); }
+
+    .modal-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .modal-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .signup-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-field input {
+      height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease;
+      border-radius: 0;
+      width: 100%;
+    }
+    .form-field input:focus { border-color: var(--blue); }
+    .form-field input.invalid { border-color: #c0392b; }
+
+    .password-wrap { position: relative; }
+    .password-wrap input { padding-right: 44px; }
+    .toggle-pw {
+      position: absolute;
+      right: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      display: flex; align-items: center;
+      transition: color 0.2s ease;
+    }
+    .toggle-pw:hover { color: var(--text); }
+
+    .form-error {
+      font-size: 12px;
+      color: #c0392b;
+      padding: 10px 14px;
+      border: 1px solid rgba(192,57,43,0.2);
+      background: rgba(192,57,43,0.04);
+    }
+    .form-error[hidden] { display: none; }
+
+    .btn-full { width: 100%; justify-content: center; margin-top: 4px; }
+    .submit-loading[hidden] { display: none !important; }
+
+    .modal-success {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 24px 0 8px;
+      gap: 16px;
+    }
+    .modal-success[hidden] { display: none; }
+    .success-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-success h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .modal-success p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 320px; }
+
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
       .nav-links, .nav-right { display: none; }
@@ -1226,6 +1377,8 @@
       .footer-top { grid-template-columns: 1fr; }
       .footer-col { padding: 36px 24px; border-right: none; border-bottom: 1px solid var(--border-dark); }
       .footer-bottom { padding: 16px 24px; flex-direction: column; gap: 8px; text-align: center; }
+      .modal-panel { padding: 36px 24px 28px; }
+      .form-row { grid-template-columns: 1fr; }
 
       .testimonials-header { padding: 0 24px; }
       #menu { padding: var(--space-2xl) 0; }
@@ -1621,14 +1774,70 @@
       </h2>
       <p class="cta-body reveal reveal-d2" data-i18n="cta.body">19 Nisan lansmanından önce e-posta listemize katılın. İlk 100 kişiye ücretsiz Ice Latte ikramı.</p>
       <div class="cta-actions reveal reveal-d3">
-        <a href="mailto:merhaba@kadikoycoffee.com" class="btn-primary">
+        <button type="button" class="btn-primary" id="open-signup">
           <span data-i18n="cta.btn1">Hemen Kaydol</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </a>
+        </button>
         <a href="#menu" class="btn-outline" data-i18n="cta.btn2">Menüyü İncele</a>
       </div>
     </div>
   </section>
+
+  <!-- SIGNUP MODAL -->
+  <div id="signup-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-panel">
+      <button class="modal-close" id="close-signup" aria-label="Kapat">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="modal-header">
+        <div class="modal-logo">Kadıköy <span>Coffee</span></div>
+        <h2 class="modal-title" id="modal-title" data-i18n="modal.title">Üyelik Oluştur</h2>
+        <p class="modal-sub" data-i18n="modal.sub">İlk 100 üyeden biri ol, ücretsiz Ice Latte kazan.</p>
+      </div>
+
+      <form id="signup-form" class="signup-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-firstname" data-i18n="modal.firstname">Adınız</label>
+            <input type="text" id="f-firstname" name="firstname" autocomplete="given-name" required />
+          </div>
+          <div class="form-field">
+            <label for="f-lastname" data-i18n="modal.lastname">Soyadınız</label>
+            <input type="text" id="f-lastname" name="lastname" autocomplete="family-name" required />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-username" data-i18n="modal.username">Kullanıcı Adı</label>
+          <input type="text" id="f-username" name="username" autocomplete="username" required />
+        </div>
+        <div class="form-field">
+          <label for="f-password" data-i18n="modal.password">Şifre</label>
+          <div class="password-wrap">
+            <input type="password" id="f-password" name="password" autocomplete="new-password" required minlength="6" />
+            <button type="button" class="toggle-pw" aria-label="Şifreyi göster">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="form-error" id="form-error" hidden></p>
+        <button type="submit" class="btn-primary btn-full" id="submit-btn">
+          <span class="submit-label" data-i18n="modal.submit">Üye Ol</span>
+          <span class="submit-loading" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite"/></path></svg>
+          </span>
+        </button>
+      </form>
+
+      <div class="modal-success" id="modal-success" hidden>
+        <div class="success-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="var(--blue)" stroke-width="1.5"/><path d="M10 16l4 4 8-8" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 data-i18n="modal.successTitle">Hoş Geldin!</h3>
+        <p data-i18n="modal.successBody">Üyeliğin oluşturuldu. 19 Nisan lansmanı için sana özel davetiye gönderilecek.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -1896,6 +2105,155 @@
     });
 
     buildTicker('tr');
+
+    /* ─── EMAILJS CONFIG ─── */
+    const EMAILJS_PUBLIC_KEY  = '1C4N4xd8rgqJK0YBz';
+    const EMAILJS_SERVICE_ID  = 'service_mjxkj4y';
+    const EMAILJS_TEMPLATE_ID = 'template_7h1f3pe';
+    try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch(e) { console.warn('EmailJS yüklenemedi:', e); }
+
+    /* ─── i18n — modal keys ─── */
+    const MODAL_STRINGS = {
+      tr: {
+        'modal.title':       'Üyelik Oluştur',
+        'modal.sub':         'İlk 100 üyeden biri ol, ücretsiz Ice Latte kazan.',
+        'modal.firstname':   'Adınız',
+        'modal.lastname':    'Soyadınız',
+        'modal.username':    'Kullanıcı Adı',
+        'modal.password':    'Şifre',
+        'modal.submit':      'Üye Ol',
+        'modal.successTitle':'Hoş Geldin!',
+        'modal.successBody': 'Üyeliğin oluşturuldu. 19 Nisan lansmanı için sana özel davetiye gönderilecek.',
+        'modal.errRequired': 'Lütfen tüm alanları doldurun.',
+        'modal.errPassword': 'Şifre en az 6 karakter olmalıdır.',
+        'modal.errSend':     'Bir hata oluştu, lütfen tekrar deneyin.',
+      },
+      en: {
+        'modal.title':       'Create Account',
+        'modal.sub':         'Be one of the first 100 members and win a free Ice Latte.',
+        'modal.firstname':   'First Name',
+        'modal.lastname':    'Last Name',
+        'modal.username':    'Username',
+        'modal.password':    'Password',
+        'modal.submit':      'Sign Up',
+        'modal.successTitle':'Welcome!',
+        'modal.successBody': 'Your account has been created. A special invitation for the April 19 launch will be sent to you.',
+        'modal.errRequired': 'Please fill in all fields.',
+        'modal.errPassword': 'Password must be at least 6 characters.',
+        'modal.errSend':     'Something went wrong, please try again.',
+      }
+    };
+
+    function applyModalLang(lang) {
+      const t = { ...TRANSLATIONS[lang], ...MODAL_STRINGS[lang] };
+      document.querySelectorAll('#signup-modal [data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+    }
+
+    /* ─── MODAL OPEN / CLOSE ─── */
+    const modal       = document.getElementById('signup-modal');
+    const openBtn     = document.getElementById('open-signup');
+    const closeBtn    = document.getElementById('close-signup');
+    const signupForm  = document.getElementById('signup-form');
+    const successBox  = document.getElementById('modal-success');
+    const formError   = document.getElementById('form-error');
+    const submitBtn   = document.getElementById('submit-btn');
+    const submitLabel = submitBtn.querySelector('.submit-label');
+    const submitLoad  = submitBtn.querySelector('.submit-loading');
+
+    function openModal() {
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.classList.add('visible'));
+      document.body.style.overflow = 'hidden';
+      applyModalLang(currentLang);
+      document.getElementById('f-firstname').focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('visible');
+      setTimeout(() => {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        signupForm.reset();
+        signupForm.hidden = false;
+        successBox.hidden = true;
+        formError.hidden = true;
+        submitLabel.hidden = false;
+        submitLoad.hidden = true;
+        submitBtn.disabled = false;
+      }, 250);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+    /* ─── PASSWORD TOGGLE ─── */
+    document.querySelector('.toggle-pw').addEventListener('click', function() {
+      const input = document.getElementById('f-password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    });
+
+    /* ─── FORM SUBMIT ─── */
+    signupForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const t = MODAL_STRINGS[currentLang];
+      const firstname = document.getElementById('f-firstname').value.trim();
+      const lastname  = document.getElementById('f-lastname').value.trim();
+      const username  = document.getElementById('f-username').value.trim();
+      const password  = document.getElementById('f-password').value;
+
+      formError.hidden = true;
+      [document.getElementById('f-firstname'), document.getElementById('f-lastname'),
+       document.getElementById('f-username'),  document.getElementById('f-password')]
+        .forEach(i => i.classList.remove('invalid'));
+
+      if (!firstname || !lastname || !username || !password) {
+        formError.textContent = t['modal.errRequired'];
+        formError.hidden = false;
+        return;
+      }
+      if (password.length < 6) {
+        document.getElementById('f-password').classList.add('invalid');
+        formError.textContent = t['modal.errPassword'];
+        formError.hidden = false;
+        return;
+      }
+
+      submitLabel.hidden = true;
+      submitLoad.hidden = false;
+      submitBtn.disabled = true;
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email:  'srhtdrn17@gmail.com',
+          firstname,
+          lastname,
+          username,
+          signup_date: new Date().toLocaleString('tr-TR'),
+        });
+        // Kullanıcı verisini localStorage'a kaydet
+        localStorage.setItem('kc_user', JSON.stringify({
+          firstname, lastname, username,
+          email: '', phone: '', address: '', city: '', postalCode: '', birthdate: '', bio: '',
+          joinDate: new Date().toLocaleDateString('tr-TR'),
+        }));
+        // Profil sayfasını yeni sekmede aç
+        setTimeout(() => window.open('profile.html', '_blank'), 800);
+        signupForm.hidden = true;
+        successBox.hidden = false;
+        applyModalLang(currentLang);
+      } catch {
+        formError.textContent = t['modal.errSend'];
+        formError.hidden = false;
+        submitLabel.hidden = false;
+        submitLoad.hidden = true;
+        submitBtn.disabled = false;
+      }
+    });
 
     /* ─── NAV HAMBURGER ──── */
     const hamburger = document.querySelector('.nav-hamburger');
