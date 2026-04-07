@@ -270,8 +270,8 @@
     }
     .nav-mobile a:hover { color: var(--blue); }
 
-    .nav-mobile-bottom {
-      margin-top: 40px;
+    .nav-mobile-top {
+      margin-bottom: 32px;
       display: flex;
       align-items: center;
       gap: var(--space-md);
@@ -280,14 +280,16 @@
     .nav-mobile-login {
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       padding: 10px 20px;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border2);
+      background: var(--blue);
+      color: #fff;
+      border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: background 0.2s ease;
     }
+    .nav-mobile-login:hover { background: var(--blue-mid); }
     .nav-mobile-profile {
       display: inline-flex !important;
       align-items: center;
@@ -1524,12 +1526,7 @@
 
   <!-- MOBILE MENU -->
   <div class="nav-mobile" role="dialog" aria-label="Navigasyon">
-    <a href="#ice-latte">Ice Latte</a>
-    <a href="#menu" data-i18n="nav.menu">Menü</a>
-    <a href="#story" data-i18n="nav.story">Hikayemiz</a>
-    <a href="#location" data-i18n="nav.location">Konum</a>
-    <a href="#cta" data-i18n="nav.cta">Randevu Al</a>
-    <div class="nav-mobile-bottom">
+    <div class="nav-mobile-top">
       <div class="lang-toggle" role="group" aria-label="Language / Dil">
         <button class="lang-btn active" data-lang="tr">TR</button>
         <button class="lang-btn" data-lang="en">EN</button>
@@ -1540,6 +1537,11 @@
         <span id="nav-mobile-profile-name">Profil</span>
       </a>
     </div>
+    <a href="#ice-latte">Ice Latte</a>
+    <a href="#menu" data-i18n="nav.menu">Menü</a>
+    <a href="#story" data-i18n="nav.story">Hikayemiz</a>
+    <a href="#location" data-i18n="nav.location">Konum</a>
+    <a href="#cta" data-i18n="nav.cta">Randevu Al</a>
   </div>
 
   <!-- HERO -->
