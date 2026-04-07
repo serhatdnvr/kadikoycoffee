@@ -385,10 +385,15 @@
   <!-- TOPBAR -->
   <header class="topbar">
     <a href="index.html" class="topbar-logo">Kadıköy <span>Coffee</span></a>
-    <a href="index.html" class="back-btn">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Ana Sayfaya Dön
-    </a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="index.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Ana Sayfaya Dön
+      </a>
+      <button id="logout-btn" style="display:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:7px 16px;background:transparent;color:#c0392b;border:1px solid rgba(192,57,43,0.3);border-radius:20px;cursor:pointer;transition:border-color 0.2s ease" onmouseover="this.style.borderColor='#c0392b'" onmouseout="this.style.borderColor='rgba(192,57,43,0.3)'">
+        Çıkış Yap
+      </button>
+    </div>
   </header>
 
   <main id="app">
@@ -541,13 +546,29 @@
   <script>
     const FIELDS = ['firstname','lastname','username','email','phone','address','city','district','postalCode','country','birthdate','bio'];
 
+    function getAccounts() {
+      try { return JSON.parse(localStorage.getItem('kc_accounts') || '{}'); }
+      catch { return {}; }
+    }
+
+    function getSession() {
+      return localStorage.getItem('kc_session') || null;
+    }
+
     function getUser() {
-      try { return JSON.parse(localStorage.getItem('kc_user')) || null; }
-      catch { return null; }
+      const session = getSession();
+      if (!session) return null;
+      const accounts = getAccounts();
+      return accounts[session] || null;
     }
 
     function saveUser(data) {
-      localStorage.setItem('kc_user', JSON.stringify(data));
+      const session = getSession();
+      if (!session) return;
+      const accounts = getAccounts();
+      accounts[session] = { ...accounts[session], ...data };
+      localStorage.setItem('kc_accounts', JSON.stringify(accounts));
+      localStorage.setItem('kc_user', JSON.stringify(accounts[session]));
     }
 
     function initials(firstname, lastname) {
@@ -557,36 +578,42 @@
     }
 
     function render(user) {
-      // Avatar + header
-      document.getElementById('avatar-initials').textContent = initials(user.firstname, user.lastname);
-      document.getElementById('display-name').textContent    = [user.firstname, user.lastname].filter(Boolean).join(' ') || 'İsimsiz Üye';
+      document.getElementById('avatar-initials').textContent  = initials(user.firstname, user.lastname);
+      document.getElementById('display-name').textContent     = [user.firstname, user.lastname].filter(Boolean).join(' ') || 'İsimsiz Üye';
       document.getElementById('display-username').textContent = user.username || '—';
-      document.getElementById('member-since').textContent    = 'Üye' + (user.joinDate ? ' — ' + user.joinDate : '');
-
-      // Populate fields
+      document.getElementById('member-since').textContent     = 'Üye' + (user.joinDate ? ' — ' + user.joinDate : '');
       FIELDS.forEach(key => {
         const el = document.getElementById('p-' + key);
         if (el && user[key] !== undefined) el.value = user[key];
       });
     }
 
-    const user = getUser();
+    const user     = getUser();
     const content  = document.getElementById('profile-content');
     const notFound = document.getElementById('not-found');
+    const logoutBtn = document.getElementById('logout-btn');
 
     if (!user) {
       notFound.style.display = 'flex';
     } else {
       content.style.display = 'block';
+      logoutBtn.style.display = 'inline-flex';
       render(user);
     }
+
+    // Logout
+    logoutBtn.addEventListener('click', function() {
+      localStorage.removeItem('kc_session');
+      localStorage.removeItem('kc_user');
+      window.location.href = 'index.html';
+    });
 
     // Save form
     document.getElementById('profile-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const current = getUser() || {};
-      const saveBtn   = document.getElementById('save-btn');
-      const feedback  = document.getElementById('save-feedback');
+      const saveBtn  = document.getElementById('save-btn');
+      const feedback = document.getElementById('save-feedback');
 
       FIELDS.forEach(key => {
         const el = document.getElementById('p-' + key);
@@ -599,7 +626,6 @@
 
         feedback.textContent = '✓ Bilgiler kaydedildi';
         feedback.className = 'save-feedback success show';
-
         saveBtn.disabled = true;
         setTimeout(() => {
           feedback.classList.remove('show');

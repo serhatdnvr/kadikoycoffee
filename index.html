@@ -190,6 +190,38 @@
     .nav-cta:hover { background: var(--blue); }
     .nav-cta:active { background: var(--blue-mid); transform: scale(0.98); }
 
+    .nav-login-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 8px 18px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .nav-login-btn:hover { border-color: var(--text); }
+    .nav-login-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    .nav-profile-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--amber);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid rgba(200,145,58,0.3);
+      border-radius: 4px;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .nav-profile-btn:hover { border-color: var(--amber); color: var(--amber-lt); }
+
     .nav-hamburger {
       display: none;
       flex-direction: column;
@@ -1403,6 +1435,11 @@
           <button class="lang-btn active" data-lang="tr">TR</button>
           <button class="lang-btn" data-lang="en">EN</button>
         </div>
+        <button type="button" class="nav-login-btn" id="open-login" data-i18n="nav.login">Giriş Yap</button>
+        <a href="profile.html" class="nav-profile-btn" id="nav-profile-link" hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="nav-profile-name">Profil</span>
+        </a>
         <a href="#cta" class="nav-cta" data-i18n="nav.cta">Randevu Al</a>
       </div>
       <button class="nav-hamburger" aria-label="Menüyü aç" aria-expanded="false">
@@ -1839,6 +1876,45 @@
     </div>
   </div>
 
+  <!-- LOGIN MODAL -->
+  <div id="login-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" hidden>
+    <div class="modal-panel" style="max-width:400px">
+      <button class="modal-close" id="close-login" aria-label="Kapat">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="modal-header">
+        <div class="modal-logo">Kadıköy <span>Coffee</span></div>
+        <h2 class="modal-title" id="login-modal-title">Giriş Yap</h2>
+        <p class="modal-sub">Hesabına giriş yap, profilini görüntüle.</p>
+      </div>
+
+      <form id="login-form" class="signup-form" novalidate>
+        <div class="form-field">
+          <label for="l-username">Kullanıcı Adı</label>
+          <input type="text" id="l-username" name="username" autocomplete="username" required placeholder="kullaniciadi" />
+        </div>
+        <div class="form-field">
+          <label for="l-password">Şifre</label>
+          <div class="password-wrap">
+            <input type="password" id="l-password" name="password" autocomplete="current-password" required placeholder="••••••" />
+            <button type="button" class="toggle-pw" id="login-toggle-pw" aria-label="Şifreyi göster">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="form-error" id="login-error" hidden></p>
+        <button type="submit" class="btn-primary btn-full" id="login-submit-btn">
+          <span>Giriş Yap</span>
+        </button>
+        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px">
+          Hesabın yok mu?
+          <button type="button" id="switch-to-signup" style="background:none;border:none;color:var(--amber);font-size:13px;cursor:pointer;font-family:inherit;padding:0;">Üye Ol</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-top">
@@ -2126,6 +2202,7 @@
         'modal.successBody': 'Üyeliğin oluşturuldu. 19 Nisan lansmanı için sana özel davetiye gönderilecek.',
         'modal.errRequired': 'Lütfen tüm alanları doldurun.',
         'modal.errPassword': 'Şifre en az 6 karakter olmalıdır.',
+        'modal.errUsername': 'Bu kullanıcı adı zaten alınmış.',
         'modal.errSend':     'Bir hata oluştu, lütfen tekrar deneyin.',
       },
       en: {
@@ -2140,6 +2217,7 @@
         'modal.successBody': 'Your account has been created. A special invitation for the April 19 launch will be sent to you.',
         'modal.errRequired': 'Please fill in all fields.',
         'modal.errPassword': 'Password must be at least 6 characters.',
+        'modal.errUsername': 'This username is already taken.',
         'modal.errSend':     'Something went wrong, please try again.',
       }
     };
@@ -2223,6 +2301,15 @@
         return;
       }
 
+      // Kullanıcı adı benzersizlik kontrolü
+      const takenUsernames = JSON.parse(localStorage.getItem('kc_usernames') || '[]');
+      if (takenUsernames.map(u => u.toLowerCase()).includes(username.toLowerCase())) {
+        document.getElementById('f-username').classList.add('invalid');
+        formError.textContent = t['modal.errUsername'];
+        formError.hidden = false;
+        return;
+      }
+
       submitLabel.hidden = true;
       submitLoad.hidden = false;
       submitBtn.disabled = true;
@@ -2235,12 +2322,24 @@
           username,
           signup_date: new Date().toLocaleString('tr-TR'),
         });
-        // Kullanıcı verisini localStorage'a kaydet
-        localStorage.setItem('kc_user', JSON.stringify({
-          firstname, lastname, username,
-          email: '', phone: '', address: '', city: '', postalCode: '', birthdate: '', bio: '',
+        // Kullanıcı adını alınanlar listesine ekle
+        takenUsernames.push(username.toLowerCase());
+        localStorage.setItem('kc_usernames', JSON.stringify(takenUsernames));
+
+        // Hesap bilgilerini kaydet (username → kullanıcı verisi)
+        const accounts = JSON.parse(localStorage.getItem('kc_accounts') || '{}');
+        accounts[username.toLowerCase()] = {
+          firstname, lastname, username, password,
+          email: '', phone: '', address: '', city: '', district: '', postalCode: '', country: 'TR', birthdate: '', bio: '',
           joinDate: new Date().toLocaleDateString('tr-TR'),
-        }));
+        };
+        localStorage.setItem('kc_accounts', JSON.stringify(accounts));
+
+        // Aktif oturumu kaydet
+        localStorage.setItem('kc_session', username.toLowerCase());
+
+        // Eski kc_user anahtarını da doldur (profile.html uyumluluğu)
+        localStorage.setItem('kc_user', JSON.stringify(accounts[username.toLowerCase()]));
         // Profil sayfasını yeni sekmede aç
         setTimeout(() => window.open('profile.html', '_blank'), 800);
         signupForm.hidden = true;
@@ -2253,6 +2352,95 @@
         submitLoad.hidden = true;
         submitBtn.disabled = false;
       }
+    });
+
+    /* ─── NAV SESSION CHECK ─── */
+    (function() {
+      const session = localStorage.getItem('kc_session');
+      const loginBtn = document.getElementById('open-login');
+      const profileLink = document.getElementById('nav-profile-link');
+      const profileName = document.getElementById('nav-profile-name');
+      if (session) {
+        const accounts = JSON.parse(localStorage.getItem('kc_accounts') || '{}');
+        const user = accounts[session];
+        loginBtn.hidden = true;
+        profileLink.hidden = false;
+        if (user) profileName.textContent = user.firstname || user.username;
+      }
+    })();
+
+    /* ─── LOGIN MODAL ─── */
+    const loginModal     = document.getElementById('login-modal');
+    const openLoginBtn   = document.getElementById('open-login');
+    const closeLoginBtn  = document.getElementById('close-login');
+    const loginForm      = document.getElementById('login-form');
+    const loginError     = document.getElementById('login-error');
+    const switchToSignup = document.getElementById('switch-to-signup');
+
+    function openLoginModal() {
+      loginModal.hidden = false;
+      requestAnimationFrame(() => loginModal.classList.add('visible'));
+      document.body.style.overflow = 'hidden';
+      loginForm.reset();
+      loginError.hidden = true;
+      document.getElementById('l-username').focus();
+    }
+
+    function closeLoginModal() {
+      loginModal.classList.remove('visible');
+      setTimeout(() => {
+        loginModal.hidden = true;
+        document.body.style.overflow = '';
+      }, 250);
+    }
+
+    openLoginBtn.addEventListener('click', openLoginModal);
+    closeLoginBtn.addEventListener('click', closeLoginModal);
+    loginModal.addEventListener('click', e => { if (e.target === loginModal) closeLoginModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !loginModal.hidden) closeLoginModal(); });
+
+    switchToSignup.addEventListener('click', () => {
+      closeLoginModal();
+      setTimeout(() => openModal(), 260);
+    });
+
+    document.getElementById('login-toggle-pw').addEventListener('click', function() {
+      const input = document.getElementById('l-password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    });
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('l-username').value.trim().toLowerCase();
+      const password = document.getElementById('l-password').value;
+
+      loginError.hidden = true;
+      [document.getElementById('l-username'), document.getElementById('l-password')]
+        .forEach(i => i.classList.remove('invalid'));
+
+      if (!username || !password) {
+        loginError.textContent = 'Lütfen tüm alanları doldurun.';
+        loginError.hidden = false;
+        return;
+      }
+
+      const accounts = JSON.parse(localStorage.getItem('kc_accounts') || '{}');
+      const user = accounts[username];
+
+      if (!user || user.password !== password) {
+        document.getElementById('l-username').classList.add('invalid');
+        document.getElementById('l-password').classList.add('invalid');
+        loginError.textContent = 'Kullanıcı adı veya şifre hatalı.';
+        loginError.hidden = false;
+        return;
+      }
+
+      // Oturumu aç
+      localStorage.setItem('kc_session', username);
+      localStorage.setItem('kc_user', JSON.stringify(user));
+
+      closeLoginModal();
+      window.open('profile.html', '_blank');
     });
 
     /* ─── NAV HAMBURGER ──── */
