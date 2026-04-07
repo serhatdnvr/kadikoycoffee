@@ -82,6 +82,9 @@
     .reveal-d4 { transition-delay: 0.26s; }
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-eyebrow, .hero-main, .hero-bottom, .hero-right img {
+        opacity: 1; animation: none; transform: none;
+      }
     }
 
     /* ─── IMG WRAPPER ────────────────────────── */
@@ -266,6 +269,41 @@
       transition: color 0.2s ease;
     }
     .nav-mobile a:hover { color: var(--blue); }
+
+    .nav-mobile-bottom {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .nav-mobile-login {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .nav-mobile-profile {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: var(--amber) !important;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 1px solid rgba(200,145,58,0.3);
+      border-radius: 4px;
+      text-transform: none !important;
+      line-height: 1.4 !important;
+      letter-spacing: 0 !important;
+    }
 
     /* ═══════════════════════════════════════════
        HERO
@@ -1219,9 +1257,9 @@
       .nav-hamburger { display: flex; margin-left: auto; }
       .nav-mobile { padding: 60px 24px; }
 
-      #hero { grid-template-columns: 1fr; }
-      .hero-left { padding: 56px 32px 48px; border-right: none; border-bottom: 1px solid var(--border); }
-      .hero-right { min-height: 60vw; }
+      #hero { grid-template-columns: 1fr; height: auto; min-height: 0; }
+      .hero-right { min-height: 55vw; order: -1; }
+      .hero-left { padding: 48px 32px 40px; border-right: none; border-bottom: 1px solid var(--border); }
       .ice-latte-inner { grid-template-columns: 1fr; }
       .ice-latte-content { border-left: none; border: 1px solid var(--border); padding: 48px 32px; }
       .story-inner { grid-template-columns: 1fr; }
@@ -1479,6 +1517,17 @@
     <a href="#story" data-i18n="nav.story">Hikayemiz</a>
     <a href="#location" data-i18n="nav.location">Konum</a>
     <a href="#cta" data-i18n="nav.cta">Randevu Al</a>
+    <div class="nav-mobile-bottom">
+      <div class="lang-toggle" role="group" aria-label="Language / Dil">
+        <button class="lang-btn active" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button type="button" class="nav-mobile-login" id="open-login-mobile" data-i18n="nav.login">Giriş Yap</button>
+      <a href="profile.html" class="nav-mobile-profile" id="nav-mobile-profile-link" hidden>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span id="nav-mobile-profile-name">Profil</span>
+      </a>
+    </div>
   </div>
 
   <!-- HERO -->
@@ -2384,12 +2433,19 @@
       const loginBtn = document.getElementById('open-login');
       const profileLink = document.getElementById('nav-profile-link');
       const profileName = document.getElementById('nav-profile-name');
+      const mobileLoginBtn = document.getElementById('open-login-mobile');
+      const mobileProfileLink = document.getElementById('nav-mobile-profile-link');
+      const mobileProfileName = document.getElementById('nav-mobile-profile-name');
       if (session) {
         const accounts = JSON.parse(localStorage.getItem('kc_accounts') || '{}');
         const user = accounts[session];
+        const name = user ? (user.firstname || user.username) : session;
         loginBtn.hidden = true;
         profileLink.hidden = false;
-        if (user) profileName.textContent = user.firstname || user.username;
+        mobileLoginBtn.hidden = true;
+        mobileProfileLink.hidden = false;
+        profileName.textContent = name;
+        mobileProfileName.textContent = name;
       }
     })();
 
@@ -2419,6 +2475,14 @@
     }
 
     openLoginBtn.addEventListener('click', openLoginModal);
+    document.getElementById('open-login-mobile').addEventListener('click', () => {
+      // hamburger menüyü kapat, login modal'ı aç
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      openLoginModal();
+    });
     closeLoginBtn.addEventListener('click', closeLoginModal);
     loginModal.addEventListener('click', e => { if (e.target === loginModal) closeLoginModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && !loginModal.hidden) closeLoginModal(); });
