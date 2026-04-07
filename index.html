@@ -199,17 +199,19 @@
     .nav-login-btn {
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.03em;
       padding: 8px 18px;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border2);
+      background: var(--blue);
+      color: #fff;
+      border: none;
       border-radius: 4px;
       cursor: pointer;
-      transition: border-color 0.2s ease, color 0.2s ease;
+      transition: background 0.2s ease, transform 0.15s ease;
+      white-space: nowrap;
     }
-    .nav-login-btn:hover { border-color: var(--text); }
+    .nav-login-btn:hover { background: var(--blue-mid); }
+    .nav-login-btn:active { transform: scale(0.97); }
     .nav-login-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
     .nav-profile-btn {
@@ -287,9 +289,10 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.15s ease;
     }
     .nav-mobile-login:hover { background: var(--blue-mid); }
+    .nav-mobile-login:active { transform: scale(0.97); }
     .nav-mobile-profile {
       display: inline-flex !important;
       align-items: center;
