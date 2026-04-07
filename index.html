@@ -1459,13 +1459,26 @@
       .faq-inner { padding: 0 24px; }
     }
 
-    /* Landscape phone — kısa yükseklik düzeltmesi */
+    /* Landscape phone — nav + hero düzeltmesi */
     @media (orientation: landscape) and (max-height: 600px) {
+      /* Nav: landscape'de desktop stili, compact */
+      nav { padding: 0 16px; }
+      .nav-inner { gap: 12px; }
+      .nav-links { display: flex; gap: 16px; }
+      .nav-links a { font-size: 12px; white-space: nowrap; }
+      .nav-right  { display: flex; gap: 10px; }
+      .nav-hamburger { display: none; }
+      .nav-login-btn { font-size: 12px; padding: 7px 12px; white-space: nowrap; }
+      .nav-profile-btn { font-size: 12px; padding: 7px 12px; }
+      .nav-cta { font-size: 12px; padding: 8px 14px; white-space: nowrap; }
+
+      /* Hero: 2 sütun, auto yükseklik */
       #hero {
         height: auto;
         min-height: calc(100svh - 60px);
         grid-template-columns: 1fr 1fr;
       }
+      .hero-right { order: 0; min-height: 0; }
       .hero-left {
         padding: 28px 28px 24px;
         border-right: 1px solid var(--border);
@@ -1476,7 +1489,6 @@
       .hero-title { font-size: clamp(40px, 9vh, 80px); }
       .hero-tagline { margin-top: 12px; min-height: 0; font-size: 13px; }
       .hero-bottom { margin-top: 16px; }
-      .hero-right { min-height: 0; }
     }
   </style>
 </head>
