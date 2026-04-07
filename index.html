@@ -2393,9 +2393,9 @@
         return;
       }
 
-      // Kullanıcı adı benzersizlik kontrolü
-      const takenUsernames = JSON.parse(localStorage.getItem('kc_usernames') || '[]');
-      if (takenUsernames.map(u => u.toLowerCase()).includes(username.toLowerCase())) {
+      // Kullanıcı adı benzersizlik kontrolü (kc_accounts'tan direkt kontrol)
+      const existingAccounts = JSON.parse(localStorage.getItem('kc_accounts') || '{}');
+      if (existingAccounts[username.toLowerCase()]) {
         document.getElementById('f-username').classList.add('invalid');
         formError.textContent = t['modal.errUsername'];
         formError.hidden = false;
@@ -2414,10 +2414,6 @@
           username,
           signup_date: new Date().toLocaleString('tr-TR'),
         });
-        // Kullanıcı adını alınanlar listesine ekle
-        takenUsernames.push(username.toLowerCase());
-        localStorage.setItem('kc_usernames', JSON.stringify(takenUsernames));
-
         // Hesap bilgilerini kaydet (username → kullanıcı verisi)
         const accounts = JSON.parse(localStorage.getItem('kc_accounts') || '{}');
         accounts[username.toLowerCase()] = {
